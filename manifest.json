@@ -1,7 +1,7 @@
 {
   "name": "cheat-checks",
   "display_name": "Cheat Checks",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Beta. Flags cheaters in Bed Wars games and replays.",
   "prefix": "§5CC",
   "homepage": null,
