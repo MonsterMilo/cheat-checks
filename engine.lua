@@ -1,4 +1,4 @@
--- Cheat Checks engine (compiled to Lua, build c8e1ef69). Do not edit by hand.
+-- Cheat Checks engine (compiled to Lua, build aca580f6). Do not edit by hand.
 local __exports = {}
 local TICK, DEG, PASSABLE, CLIMB_OR_SLOW, SWORDS, FOOD, BOW, TOOLS, BED, LADDER, TALL, FALL, solid, isBlockItem, wrap, adiff, yawTo, CFG, Player, Engine, myauIndex, FACES, raycast, BLOCK_NAMES, blockName
 TICK = 50
@@ -25,7 +25,7 @@ if (a < (-180)) then a = (a + 360); end
 do return a end end
 adiff = function(_, a, b)  return Math.abs(wrap(nil, (a - b))) end
 yawTo = function(_, dx, dz)  return (Math.atan2((-dx), dz) * DEG) end
-CFG = {alertGapMs = 1000, eagleWindow = 2500, eagleMinCrouches = 4, eagleShortMs = 125, eagleSlowMs = 175, eagleSlowAmount = 0.5, eagleSlowSpread = 0.35, eagleLateShare = 0.3, eagleOneTickMs = 75, eagleShortShare = 0.75, eagleHeldShare = 0.4, eagleMinPitch = 50, eagleVL = 3, eagleWaitMs = 1000, displaceMinDist = 1.2, eagleFadePerSec = 0.25, eagleFadeAfterMs = 2000, skipMinBlocks = 6, skipMinCrouches = 2, skipMaxShare = 1, skipStepMs = 120, skipMinSkipped = 2, skipShortMs = 125, skipGapMs = 700, skipAmount = 1.5, eagleFallCool = 1.5, eagleEdgeSpread = 0.55, eagleEdgeWindow = 10000, eagleEdgeN = 12, eagleNeedEdges = true, keepYMinBlocks = 6, keepYMinSpeed = 3.5, keepYMidAirShare = 0.7, keepYVL = 2, keepYGapMs = 700, backMinSpeed = 5.2, backMinBlocks = 5, backVL = 2, rotFailRun = 5, rotVL = 2, rotCrouchMs = 1500, ravenPitchByte = 60, ravenMinBlocks = 10, ravenMinYaws = 8, ravenVL = 2, fastMineVL = 4, fastMineDonePct = 95, breakDelayShortMs = 175, breakDelayMinRun = 4, breakDelayVL = 1.5, breakDelayQuickMs = 120, stasisMinMs = 600, stasisVL = 1, hitHangMs = 1000, hitHangHitMs = 2500, freezeSlackMs = 250, freezeRate = 0.8, freezeMargin = 1, freezeMinTicks = 4, freezeVL = 1, freezeQuietMs = 2000, freezeWetMs = 1000, displaceAt = 60, displaceAround = 40, displaceMaxUpdates = 3, displaceLongAt = 120, displaceVL = 2, displaceOneAt = 75, abWindow = 6000, abMinCycles = 5, abShare = 0.7, abVL = 2, defendRadius = 3, defendBlocks = 13, defendMs = 1000, defendOrder = 6, defendOrderMs = 1600, defendVL = 1, defendSwaps = 3, defendSwapGap = 110, defendSwapMs = 1500, towerRise = 3, towerRate = 3.5, tellyWindow = 3500, tellyPlaces = 5, tellyTurn = 60, tellyRepeat = 3, clutchVL = 2, clutchMinScore = 1, fastPlaceRun = 7, fastPlaceSecond = 15, blockInMs = 400, blockInMin = 4, blockInQuickTurns = 2, blockInFast = 6, blockInFastMs = 600, blockInVL = 2, blockInSteady = 0.25, blockInRing = 5, blockInRingMs = 300, blockInRingSides = 3, auraReach = 4.5, auraAim = 25, auraTurn = 60, auraWindowMs = 2000, auraSwitches = 3, auraVL = 2, auraGapMs = 160, auraFlickMs = 600, auraFlickDeg = 75, auraFlicks = 4, auraEnemyNear = 6, displaceOtherAim = 40, displaceBusyMs = 1500, snapBackDeg = 15, snapHurtMs = 250, auraAimReplay = 35, auraGapMsReplay = 250, auraFlickMsReplay = 900, autoToolMs = 60, autoToolMin = 6, autoToolShare = 0.3, autoToolVL = 2, fbReach = 6, fbAim = 15, fbSnapMs = 300, fbSnap = 45, fbVL = 2, jumpResetMinHits = 8, jumpResetShare = 0.8, jumpResetVL = 2, jumpResetStandMs = 150, blockHitHits = 10, blockHitMin = 8, blockHitSpanMs = 15000, blockHitAfterMs = 400, blockHitBand = 0.75, blockHitVL = 2, hitClutchMs = 3000, hitClutchBlocks = 8, hitClutchHits = 3, hitClutchLevels = 2, safeMinBlocks = 8, safeMinMs = 2000, safeGapMs = 700, safeHeadDeg = 5, safeMinSpeed = 2, safeBack = 110, safeMaxDiag = 0.6, safeVL = 2, diagMinBlocks = 16, diagMinMs = 3000, diagMinSpeed = 3.7, diagHeadDeg = 3}
+CFG = {alertGapMs = 1000, eagleWindow = 2500, eagleMinCrouches = 4, eagleShortMs = 125, eagleSlowMs = 175, eagleSlowAmount = 0.5, eagleSlowSpread = 0.35, eagleLateShare = 0.3, eagleOneTickMs = 75, eagleShortShare = 0.75, eagleHeldShare = 0.4, eagleMinPitch = 50, eagleVL = 3, eagleWaitMs = 1000, displaceMinDist = 1.2, eagleFadePerSec = 0.25, eagleFadeAfterMs = 2000, skipMinBlocks = 6, skipMinCrouches = 2, skipMaxShare = 1, skipStepMs = 120, skipMinSkipped = 2, skipShortMs = 125, skipGapMs = 700, skipAmount = 1.5, eagleFallCool = 1.5, eagleEdgeSpread = 0.55, eagleEdgeWindow = 10000, eagleEdgeN = 12, eagleNeedEdges = true, keepYMinBlocks = 6, keepYMinSpeed = 3.5, keepYMidAirShare = 0.7, keepYVL = 2, keepYGapMs = 700, backMinSpeed = 5.2, backMinBlocks = 5, backVL = 2, rotFailRun = 5, rotVL = 2, rotCrouchMs = 1500, ravenPitchByte = 60, ravenMinBlocks = 10, ravenMinYaws = 8, ravenVL = 2, fastMineVL = 4, fastMineDonePct = 95, breakDelayShortMs = 175, breakDelayMinRun = 4, breakDelayVL = 1.5, breakDelayQuickMs = 120, stasisMinMs = 600, stasisVL = 1, hitHangMs = 1000, hitHangHitMs = 2500, freezeSlackMs = 250, freezeRate = 0.8, freezeMargin = 1, freezeMinTicks = 4, freezeVL = 1, freezeQuietMs = 2000, freezeWetMs = 1000, displaceAt = 60, displaceAround = 40, displaceMaxUpdates = 3, displaceLongAt = 120, displaceVL = 2, displaceOneAt = 75, abWindow = 6000, abMinCycles = 5, abShare = 0.7, abVL = 2, defendRadius = 3, defendBlocks = 13, defendMs = 1000, defendOrder = 6, defendOrderMs = 1600, defendVL = 1, defendSwaps = 3, defendSwapGap = 110, defendSwapMs = 1500, towerRise = 3, towerRate = 3.5, tellyWindow = 3500, tellyPlaces = 5, tellyTurn = 60, tellyRepeat = 3, clutchVL = 2, clutchMinScore = 1, fastPlaceRun = 7, fastPlaceSecond = 15, blockInMs = 400, blockInMin = 4, blockInQuickTurns = 2, blockInFast = 6, blockInFastMs = 600, blockInVL = 2, blockInSteady = 0.25, blockInRing = 5, blockInRingMs = 300, blockInRingSides = 3, auraReach = 4.5, auraAim = 25, auraTurn = 60, auraWindowMs = 2000, auraSwitches = 3, auraVL = 2, auraGapMs = 160, auraFlickMs = 600, auraFlickDeg = 75, auraFlicks = 4, auraFlickAim = 35, auraFlickRange = 10, auraEnemyNear = 6, displaceOtherAim = 40, displaceBusyMs = 1500, snapBackDeg = 15, snapHurtMs = 250, auraAimReplay = 35, auraGapMsReplay = 250, auraFlickMsReplay = 900, autoToolMs = 60, autoToolMin = 6, autoToolShare = 0.3, autoToolVL = 2, fbReach = 6, fbAim = 15, fbSnapMs = 300, fbSnap = 45, fbVL = 2, jumpResetMinHits = 8, jumpResetShare = 0.8, jumpResetVL = 2, jumpResetStandMs = 150, blockHitHits = 10, blockHitMin = 8, blockHitSpanMs = 15000, blockHitAfterMs = 400, blockHitBand = 0.75, blockHitVL = 2, hitClutchMs = 3000, hitClutchBlocks = 8, hitClutchHits = 3, hitClutchLevels = 2, safeMinBlocks = 8, safeMinMs = 2000, safeGapMs = 700, safeHeadDeg = 5, safeMinSpeed = 2, safeBack = 110, safeMaxDiag = 0.6, safeVL = 2, diagMinBlocks = 16, diagMinMs = 3000, diagMinSpeed = 3.7, diagHeadDeg = 3}
 Player = CLASS("Player")
 Player.constructor = function(this, id, uuid, t)  this.id = id;
 this.uuid = uuid;
@@ -612,13 +612,18 @@ local off = adiff(nil, yaw, yawTo(nil, (qp.x - ap.x), (qp.z - ap.z)));
 if (off < bd) then bd = off;
 best = q; end end ::__c78::  end
 do return best end end
+Engine.flickTarget = function(this, p, yaw, t)  local ap = this:posAt(p, t); local c = this.cfg;
+for __i79, q, qp in ITER2(this:nearAt(p, t)) do do local d = Math.hypot((qp.x - ap.x), (qp.y - ap.y), (qp.z - ap.z));
+if (GT(d, c.auraFlickRange) or LT(d, c.displaceMinDist)) then goto __c80 end
+if LE(adiff(nil, yaw, yawTo(nil, (qp.x - ap.x), (qp.z - ap.z))), c.auraFlickAim) then do return q end end end ::__c80::  end
+do return nil end end
 Engine.sameTeam = function(this, a, q)  if ((not T(this.teamOf)) or (q.name == "you")) then do return false end end
-local __ok79, __e80, __r81 = pcall(function() local x = this:teamOf(a); local y = this:teamOf(q);
-do return ((not (not T(x))) and (x == y)) end end) if not __ok79 then local e = __e80; do return false end end if __ok79 and __e80 ~= nil then return __e80 end end
+local __ok81, __e82, __r83 = pcall(function() local x = this:teamOf(a); local y = this:teamOf(q);
+do return ((not (not T(x))) and (x == y)) end end) if not __ok81 then local e = __e82; do return false end end if __ok81 and __e82 ~= nil then return __e82 end end
 Engine.nearAt = function(this, a, t)  local near = AN(0);
-for __i82, q in ITER(this.players:values()) do do if ((q ~= a) and (not T(this:hidden(q)))) then near:push(AN(2, q, this:posAt(q, t))); end end   end
+for __i84, q in ITER(this.players:values()) do do if ((q ~= a) and (not T(this:hidden(q)))) then near:push(AN(2, q, this:posAt(q, t))); end end   end
 if (T(this.self) and (Math.abs((t - this.self.t)) < 1500)) then local sp = this.self;
-for __i84, e in ITER(OR(this.selfTrack, AN(0))) do do if (Math.abs((e.t - t)) < Math.abs((sp.t - t))) then sp = e; end end   end
+for __i86, e in ITER(OR(this.selfTrack, AN(0))) do do if (Math.abs((e.t - t)) < Math.abs((sp.t - t))) then sp = e; end end   end
 near:push(AN(2, ORF(this.selfQ, function() return (function() this.selfQ = {name = "you"}; return this.selfQ end)() end), sp)); end
 do return near end end
 Engine.checkAura = function(this, p, t)  local c = this.cfg; local rs = p.rots; local n = rs.length;
@@ -629,11 +634,12 @@ if (not T(p.swings:some(function(_, s)  return (Math.abs((s - b.t)) <= 300) end)
 if (T(this:stalled((a.t - 1000), b.t)) or T(this.choppy:some(function(_, g)  return (GE(g.to, (a.t - 1500)) and LE(g.from, b.t)) end))) then do return end end
 local F = (function() p.auraFlicks = OR(p.auraFlicks, AN(0)):filter(function(_, e)  return ((b.t - e.t) <= IFX(T(this.inferGround), function() return c.auraFlickMsReplay end, function() return c.auraFlickMs end)) end); return p.auraFlicks end)();
 local dir = Math.sign(wrap(nil, (b.yaw - a.yaw)));
-local ap0 = this:posAt(p, b.t); local close = this:nearAt(p, b.t):filter(function(_, __p86) local q = __p86[0] local qp = __p86[1] return LE(Math.hypot((qp.x - ap0.x), (qp.y - ap0.y), (qp.z - ap0.z)), c.auraEnemyNear) end);
-if ((GE(adiff(nil, a.yaw, b.yaw), c.auraFlickDeg) and GE(close.length, 2)) and T(close:some(function(_, __p87) local q = __p87[0] return (not T(this:sameTeam(p, q))) end))) then F:push({t = b.t, dir = dir, deg = Math.round(adiff(nil, a.yaw, b.yaw))});
+local ap0 = this:posAt(p, b.t); local close = this:nearAt(p, b.t):filter(function(_, __p88) local q = __p88[0] local qp = __p88[1] return LE(Math.hypot((qp.x - ap0.x), (qp.y - ap0.y), (qp.z - ap0.z)), c.auraEnemyNear) end);
+local onto = ORF(this:flickTarget(p, b.yaw, b.t), function() return this:flickTarget(p, a.yaw, a.t) end);
+if (((GE(adiff(nil, a.yaw, b.yaw), c.auraFlickDeg) and GE(close.length, 2)) and T(close:some(function(_, __p89) local q = __p89[0] return (not T(this:sameTeam(p, q))) end))) and T(onto)) then F:push({t = b.t, dir = dir, deg = Math.round(adiff(nil, a.yaw, b.yaw)), onto = onto});
 local rev = 0;
 do local i = 1; while LT(i, F.length) do do if (F[i].dir ~= F[(i - 1)].dir) then rev = rev + 1; end end  i = i + 1; end end
-if ((GE(F.length, c.auraFlicks) and (rev >= (c.auraFlicks - 2))) and (not (T(p.auraAt) and ((b.t - p.auraAt) < 3000)))) then p.auraAt = b.t;
+if (((GE(F.length, c.auraFlicks) and (rev >= (c.auraFlicks - 2))) and GE(NEW(Set, F:map(function(_, e)  return e.onto end)).size, 2)) and (not (T(p.auraAt) and ((b.t - p.auraAt) < 3000)))) then p.auraAt = b.t;
 this:add(p, "KillAura", 2, ("head flicked " .. JSSTR(F.length) .. " times in " .. JSSTR(TOFIXED(((b.t - F[0].t) / 1000), 2)) .. "s while hitting (turns of " .. JSSTR(F:map(function(_, e)  return (JSSTR(e.deg) .. JSSTR("°")) end):join(", ")) .. "), back and forth faster than a hand can"), t, c.auraVL);
 do return end end end
 local ap = this:posAt(p, b.t);
@@ -671,16 +677,16 @@ this:proposeClutch(p, t, 2, ("placed " .. JSSTR(run.length) .. " blocks in a row
 do return end end
 if LT(run:filter(function(_, b)  return b.under end).length, (run.length / 2)) then do return end end
 this:add(p, "Scaffold", 2, ("placed " .. JSSTR(run.length) .. " blocks in a row, one every tick (" .. JSSTR(ms) .. " ms) - by hand it's at most about 6"), t, c.keepYVL); end
-Engine.eggNear = function(this, b)  for __i89, o in ITER(this.objects:values()) do do if (o.type ~= 62) then goto __c90 end
-for __i91, __v92 in ITER(o.path) do local x = __v92[0] local y = __v92[1] local z = __v92[2] do if (((Math.abs(((x - b.x) - 0.5)) < 2.5) and (Math.abs((y - b.y)) < 3.5)) and (Math.abs(((z - b.z) - 0.5)) < 2.5)) then do return true end end end   end end ::__c90::  end
-for __i94, e in ITER(this.eggs) do do if (((b.t - e.t) > 4000) or LT(b.t, (e.t - 100))) then goto __c95 end
+Engine.eggNear = function(this, b)  for __i91, o in ITER(this.objects:values()) do do if (o.type ~= 62) then goto __c92 end
+for __i93, __v94 in ITER(o.path) do local x = __v94[0] local y = __v94[1] local z = __v94[2] do if (((Math.abs(((x - b.x) - 0.5)) < 2.5) and (Math.abs((y - b.y)) < 3.5)) and (Math.abs(((z - b.z) - 0.5)) < 2.5)) then do return true end end end   end end ::__c92::  end
+for __i96, e in ITER(this.eggs) do do if (((b.t - e.t) > 4000) or LT(b.t, (e.t - 100))) then goto __c97 end
 local px = ((b.x + 0.5) - e.x); local py = ((b.y + 0.5) - e.y); local pz = ((b.z + 0.5) - e.z);
 if ((not T(e.v)) or (Math.hypot(e.v[0], e.v[2]) < 0.000001)) then if ((Math.hypot(px, pz) < 3) and (Math.abs(py) < 4)) then do return true end end
-goto __c95 end
+goto __c97 end
 local len = Math.hypot(e.v[0], e.v[2]);
 local ux = (e.v[0] / len); local uz = (e.v[2] / len);
 local along = ((px * ux) + (pz * uz)); local side = Math.abs(((px * uz) - (pz * ux)));
-if ((((along > (-3)) and (along < 45)) and (side < 2.5)) and (Math.abs(py) < 4)) then do return true end end end ::__c95::  end
+if ((((along > (-3)) and (along < 45)) and (side < 2.5)) and (Math.abs(py) < 4)) then do return true end end end ::__c97::  end
 do return false end end
 Engine.breakAnim = function(this, d, t)  local p = this.players:get(d.id);
 if (not T(p)) then do return end end
@@ -700,11 +706,11 @@ g.n = g.n + 1;
 if LT(g.hist.length, 40) then g.hist:push(AN(2, t, d.stage)); end end elseif ((T(p.dig) and (p.dig.k == k)) and (not T(p.dig.ended))) then p.dig.ended = t;
 if (T(p.dig.goneAt) and (Math.abs((p.dig.goneAt - t)) < 200)) then this:digDone(p, p.dig, t); end end end
 Engine.blockGone = function(this, x, y, z, before, t)  local k = (JSSTR((JSSTR((JSSTR((JSSTR(x) .. JSSTR(","))) .. JSSTR(y))) .. JSSTR(","))) .. JSSTR(z));
-for __i96, p in ITER(this.players:values()) do do local g = p.dig;
-if (((not T(g)) or (g.k ~= k)) or T(g.done)) then goto __c97 end
+for __i98, p in ITER(this.players:values()) do do local g = p.dig;
+if (((not T(g)) or (g.k ~= k)) or T(g.done)) then goto __c99 end
 g.goneAt = t;
 g.block = before;
-if (T(g.ended) and (Math.abs((g.ended - t)) < 200)) then this:digDone(p, g, t); end end ::__c97::  end end
+if (T(g.ended) and (Math.abs((g.ended - t)) < 200)) then this:digDone(p, g, t); end end ::__c99::  end end
 Engine.digDone = function(this, p, g, t)  g.done = true;
 local brk = {t = t, t0 = g.t0, from = g.from, stage = g.max, hist = g.hist, x = g.x, y = g.y, z = g.z, n = g.n, block = g.block, afterBreak = g.afterBreak, lastBreak = g.lastBreak};
 p.breaks:push(brk);
@@ -732,14 +738,14 @@ if (GE(recent.length, 8) and GE((recent:filter(function(_, x)  return GT(x.ms, c
 do return end end
 if ((spread == nil) and T(c.eagleNeedEdges)) then do return end end
 local one = cr:filter(function(_, x)  return LE(x.ms, c.eagleOneTickMs) end).length;
-for __i98, __v99 in ITER(AN(2, AN(3, c.eagleShortMs, 2, 1), AN(3, c.eagleSlowMs, 3, c.eagleSlowAmount))) do local ms = __v99[0] local ticks = __v99[1] local amt = __v99[2] do if ((ticks == 3) and ((spread == nil) or GT(spread, c.eagleSlowSpread))) then goto __c100 end
+for __i100, __v101 in ITER(AN(2, AN(3, c.eagleShortMs, 2, 1), AN(3, c.eagleSlowMs, 3, c.eagleSlowAmount))) do local ms = __v101[0] local ticks = __v101[1] local amt = __v101[2] do if ((ticks == 3) and ((spread == nil) or GT(spread, c.eagleSlowSpread))) then goto __c102 end
 local short = cr:filter(function(_, x)  return LE(x.ms, ms) end).length;
 local share = (short / cr.length);
-if (LT(share, c.eagleShortShare) or LT(short, c.eagleMinCrouches)) then goto __c100 end
+if (LT(share, c.eagleShortShare) or LT(short, c.eagleMinCrouches)) then goto __c102 end
 p.eagleAt = t;
 local amount = (((amt == 1) and (share >= 0.99)) and 1.5 or amt);
 this:addEagle(p, amount, ("crouched " .. JSSTR(cr.length) .. " times in " .. JSSTR((Math.round(((c.eagleWindow / 1000) * 10)) / 10)) .. "s while bridging, " .. JSSTR(short) .. " of them for 1-" .. JSSTR(ticks) .. " ticks" .. JSSTR((T(one) and (" (" .. JSSTR(one) .. " for exactly one tick)") or ""))), t, c.eagleVL);
-do return end end ::__c100::  end end
+do return end end ::__c102::  end end
 Engine.checkSkippedShifts = function(this, p, pl)  local c = this.cfg; local t = pl.t;
 if (((not T(pl.under)) or T(pl.air)) or LT(pl.pitch, c.eagleMinPitch)) then do return end end
 local g = p.places:filter(function(_, b)  return ANDF(ANDF(b.under, function() return (not T(b.air)) end), function() return GE(b.pitch, c.eagleMinPitch) end) end);
@@ -827,17 +833,17 @@ do return end end
 if ((not T(R)) or ((t - R.last) > 1000)) then R = (function() p.raven = {n = 0, yaws = NEW(Set), last = t}; return p.raven end)(); end
 R.n = R.n + 1;
 R.last = t;
-for __i106, r in ITER(rots) do do R.yaws:add(BAND(B(nil, r.yaw), 255)); end   end
+for __i108, r in ITER(rots) do do R.yaws:add(BAND(B(nil, r.yaw), 255)); end   end
 R.yaws:add(BAND(B(nil, pl.yaw), 255));
 if ((GE(R.n, c.ravenMinBlocks) and GE(R.yaws.size, c.ravenMinYaws)) and (not (T(p.ravenAt) and ((t - p.ravenAt) < 5000)))) then p.ravenAt = t;
 this:add(p, "Scaffold", 2, ("Raven Scaffold: pitch stuck at exactly 85° for " .. JSSTR(R.n) .. " blocks while turning " .. JSSTR(R.yaws.size) .. " yaw steps (hands: 6 at most)"), t, c.ravenVL);
 p.raven = nil; end end
 Engine.jumpsBetween = function(this, p, a, b)  local n = 0; local prevY = nil; local rising = false;
-for __i108, e in ITER(p.track) do do if (LT(e.t, (a - 400)) or GT(e.t, (b + 100))) then goto __c109 end
+for __i110, e in ITER(p.track) do do if (LT(e.t, (a - 400)) or GT(e.t, (b + 100))) then goto __c111 end
 if (prevY ~= nil) then if (((e.y - prevY) > 0.05) and (not T(rising))) then rising = true;
 n = n + 1; end
 if ((e.y - prevY) < (-0.02)) then rising = false; end end
-prevY = e.y; end ::__c109::  end
+prevY = e.y; end ::__c111::  end
 do return n end end
 Engine.fallHurt = function(this, p, t)  local tr = p.track;
 local top = p.y; local prev = p.y; local airAt = nil;
@@ -851,7 +857,7 @@ Engine.knockedOff = function(this, p, t, ms) if ms == nil then ms = 2500 end do 
 Engine.recentlyPushed = function(this, p, t, ms)  do return ORF((((t - p.hurtAt) < ms) or ((t - p.velAt) < ms)), function() return this:nearExplosion(p, t, (ms + 1500)) end) end end
 Engine.couldAim = function(this, p, pl)  local w = this.world;
 local support = false;
-for __i111, __v112 in ITER(FACES) do local dx = __v112[0] local dy = __v112[1] local dz = __v112[2] do local s = w:get((pl.x + dx), (pl.y + dy), (pl.z + dz));
+for __i113, __v114 in ITER(FACES) do local dx = __v114[0] local dy = __v114[1] local dz = __v114[2] do local s = w:get((pl.x + dx), (pl.y + dy), (pl.z + dz));
 if (s == (-1)) then do return nil end end
 if ((s > 0) and T(solid(nil, s))) then support = true; end end   end
 if (not T(support)) then do return nil end end
@@ -861,11 +867,11 @@ local poss = AN(2, this:posAt(p, pl.t), this:posAt(p, (pl.t - 100)));
 local nxt = p.track:find(function(_, e)  return GT(e.t, pl.t) end);
 if (T(nxt) and ((nxt.t - pl.t) < 150)) then poss:push(nxt);
 local a = poss[0];
-if (T(a) and (not T(nxt.tp))) then for __i114, u in ITER(AN(4, 0.2, 0.4, 0.6, 0.8)) do do poss:push({x = (a.x + ((nxt.x - a.x) * u)), y = (a.y + ((nxt.y - a.y) * u)), z = (a.z + ((nxt.z - a.z) * u))}); end   end end end
+if (T(a) and (not T(nxt.tp))) then for __i116, u in ITER(AN(4, 0.2, 0.4, 0.6, 0.8)) do do poss:push({x = (a.x + ((nxt.x - a.x) * u)), y = (a.y + ((nxt.y - a.y) * u)), z = (a.z + ((nxt.z - a.z) * u))}); end   end end end
 local later = function(_, x, y, z)  local t = this.placedAt:get((JSSTR((JSSTR((JSSTR((JSSTR(x) .. JSSTR(","))) .. JSSTR(y))) .. JSSTR(","))) .. JSSTR(z)));
 do return ((t ~= nil) and GT(t, pl.t)) end end;
-for __i116, pos in ITER(poss) do do for __i118, eye in ITER(AN(2, 1.62, 1.54)) do do local ex = pos.x; local ey = (pos.y + eye); local ez = pos.z;
-for __i120, r in ITER(rots) do do for __i122, dyaw in ITER(AN(3, (-1.4), 0, 1.4)) do do for __i124, dp in ITER(AN(3, (-1.4), 0, 1.4)) do do local yaw = ((r.yaw + dyaw) / DEG); local pitch = (Math.max((-90), Math.min(90, (r.pitch + dp))) / DEG);
+for __i118, pos in ITER(poss) do do for __i120, eye in ITER(AN(2, 1.62, 1.54)) do do local ex = pos.x; local ey = (pos.y + eye); local ez = pos.z;
+for __i122, r in ITER(rots) do do for __i124, dyaw in ITER(AN(3, (-1.4), 0, 1.4)) do do for __i126, dp in ITER(AN(3, (-1.4), 0, 1.4)) do do local yaw = ((r.yaw + dyaw) / DEG); local pitch = (Math.max((-90), Math.min(90, (r.pitch + dp))) / DEG);
 local vx = ((-Math.sin(yaw)) * Math.cos(pitch)); local vy = (-Math.sin(pitch)); local vz = (Math.cos(yaw) * Math.cos(pitch));
 local hit = raycast(nil, w, ex, ey, ez, vx, vy, vz, 5, pl, later);
 if (((T(hit) and ((hit.x + hit.nx) == pl.x)) and ((hit.y + hit.ny) == pl.y)) and ((hit.z + hit.nz) == pl.z)) then do return true end end end   end end   end end   end end   end end   end
@@ -1015,12 +1021,12 @@ if (T(p.spawnAt) and ((t - p.spawnAt) < 2000)) then do return true end end
 local frozeAt = ((gap >= 300) and (t - gap) or t);
 local path = p.track:filter(function(_, e)  return (GE(e.t, f.t) and LT(e.t, t)) end):map(function(_, e)  return AN(3, e.x, e.y, e.z) end);
 path:push(AN(3, ox, oy, oz), AN(3, p.x, p.y, p.z));
-for __i127, __v128 in ITER(path) do local x = __v128[0] local y = __v128[1] local z = __v128[2] do if T(this:couldStand(x, y, z, frozeAt, (f.t - 1000))) then do return true end end end   end
+for __i129, __v130 in ITER(path) do local x = __v130[0] local y = __v130[1] local z = __v130[2] do if T(this:couldStand(x, y, z, frozeAt, (f.t - 1000))) then do return true end end end   end
 if (T(this:climbOrSlow(f.x, f.y, f.z, frozeAt)) or T(this:climbOrSlow(p.x, p.y, p.z, frozeAt))) then do return true end end
 local frozen = IFX((gap >= 300), function() return gap end, function() return 0 end);
 local wet = false;
 local way = ACAT(A(AN(3, f.x, f.y, f.z)), path);
-do local k = 1; while (LT(k, way.length) and (not T(wet))) do do local __d131 = way[(k - 1)] local ax = __d131[0] local ay = __d131[1] local az = __d131[2]; local __d132 = way[k] local bx = __d132[0] local by = __d132[1] local bz = __d132[2];
+do local k = 1; while (LT(k, way.length) and (not T(wet))) do do local __d133 = way[(k - 1)] local ax = __d133[0] local ay = __d133[1] local az = __d133[2]; local __d134 = way[k] local bx = __d134[0] local by = __d134[1] local bz = __d134[2];
 local steps = Math.min(40, Math.ceil((Math.max(Math.abs((by - ay)), Math.hypot((bx - ax), (bz - az))) / 0.5)));
 do local s = 1; while ((s <= steps) and (not T(wet))) do do local u = (s / steps);
 wet = this:climbOrSlow((ax + ((bx - ax) * u)), (ay + ((by - ay) * u)), (az + ((bz - az) * u)), frozeAt); end  s = s + 1; end end end  k = k + 1; end end
@@ -1038,25 +1044,25 @@ do return true end end
 Engine.checkDisplaceSwings = function(this, p)  if ((not T(p.swingQ)) or (not T(p.swingQ.length))) then do return end end
 local rs = p.rots; local n = rs.length; local maxL = this.cfg.displaceMaxUpdates;
 local keep = AN(0);
-for __i134, st in ITER(p.swingQ) do do local k = (-1);
+for __i136, st in ITER(p.swingQ) do do local k = (-1);
 do local i = (n - 1); while (i >= 0) do do if LE(rs[i].t, (st + 30)) then k = i;
 break end end  i = i - 1; end end
-if ((k < 0) or LT(rs[k].t, (st - 160))) then goto __c135 end
+if ((k < 0) or LT(rs[k].t, (st - 160))) then goto __c137 end
 if ((k + 1) >= n) then if ((rs[(n - 1)].t - st) < 600) then keep:push(st); end
-goto __c135 end
+goto __c137 end
 local found = false; local waiting = false;
-do local i = Math.max(1, ((k - maxL) + 1)); while (i <= k) do do if (T(p.displaceSeen) and LE(rs[i].t, p.displaceSeen)) then goto __c138 end
+do local i = Math.max(1, ((k - maxL) + 1)); while (i <= k) do do if (T(p.displaceSeen) and LE(rs[i].t, p.displaceSeen)) then goto __c140 end
 do local j = Math.max((i + 1), k); while (j <= (i + maxL)) do do if (j >= n) then waiting = true;
 break end
 if T(this:displaceSpike(p, rs[(i - 1)], rs:slice(i, j), rs[j], st)) then p.displaceSeen = rs[(j - 1)].t;
 found = true;
-goto __b137 end end  j = j + 1; end end end ::__c138:: i = i + 1; end end ::__b137::
-if (((not T(found)) and T(waiting)) and ((rs[(n - 1)].t - st) < 600)) then keep:push(st); end end ::__c135::  end
+goto __b139 end end  j = j + 1; end end end ::__c140:: i = i + 1; end end ::__b139::
+if (((not T(found)) and T(waiting)) and ((rs[(n - 1)].t - st) < 600)) then keep:push(st); end end ::__c137::  end
 p.swingQ = keep; end
 Engine.snapHit = function(this, a, b, run, f, t, out, back, busy, onto)  local c = this.cfg;
 if (((run.length ~= 1) or (onto.length ~= 1)) or T(busy)) then do return false end end
 if (LT(Math.min(out, back), c.displaceOneAt) or GT(adiff(nil, b.yaw, f.yaw), c.snapBackDeg)) then do return false end end
-local __d140 = onto[0] local q = __d140[0] local d = __d140[1];
+local __d142 = onto[0] local q = __d142[0] local d = __d142[1];
 if ((d > 4.5) or T(this:sameTeam(a, q))) then do return false end end
 local r = run[0];
 if (not T(OR(q.hurts, AN(0)):some(function(_, h)  return (((not T(h.fall)) and GE(h.t, (Math.min(r.t, t) - 50))) and LE(h.t, (Math.max(r.t, t) + c.snapHurtMs))) end))) then do return false end end
@@ -1065,10 +1071,10 @@ local deg = Math.round(Math.min(out, back));
 this:add(a, "Displace", c.displaceVL, ("snapped their head " .. JSSTR(deg) .. "° onto " .. JSSTR(OR(q.name, "a player")) .. " for one update to hit them, then straight back (knockback goes where the head points); " .. JSSTR(a.displaceHits) .. " hit" .. JSSTR((GT(a.displaceHits, 1) and "s" or "")) .. " like this"), t, c.displaceVL);
 do return true end end
 Engine.steadySince = function(this, p, from, to)  local prev = from;
-for __i141, e in ITER(p.track) do do if LE(e.t, from) then goto __c142 end
+for __i143, e in ITER(p.track) do do if LE(e.t, from) then goto __c144 end
 if GE(e.t, to) then break end
 if (T(e.tp) or ((e.t - prev) > 300)) then do return false end end
-prev = e.t; end ::__c142::  end
+prev = e.t; end ::__c144::  end
 do return ((to - prev) <= 300) end end
 Engine.displaceSpike = function(this, a, b, run, f, t)  local c = this.cfg;
 local r = run[0]; local last = run[(run.length - 1)];
@@ -1076,7 +1082,7 @@ local steady = ((r.t - b.t) > 300);
 if (((T(steady) and (not T(this:steadySince(a, b.t, r.t)))) or ((f.t - last.t) > 300)) or ((last.t - r.t) > 200)) then do return false end end
 if (T(this:stalled((b.t - 1700), f.t)) or T(this.choppy:some(function(_, g)  return (GE(g.to, (b.t - 2000)) and LE(g.from, (f.t + 300))) end))) then do return false end end
 local out = 180; local back = 180;
-for __i143, x in ITER(run) do do out = Math.min(out, adiff(nil, x.yaw, b.yaw));
+for __i145, x in ITER(run) do do out = Math.min(out, adiff(nil, x.yaw, b.yaw));
 back = Math.min(back, adiff(nil, x.yaw, f.yaw)); end   end
 if (LT(out, c.displaceAt) or LT(back, c.displaceAt)) then do return false end end
 if (T(steady) and (LT(Math.min(out, back), c.displaceOneAt) or GT(adiff(nil, b.yaw, f.yaw), c.snapBackDeg))) then do return false end end
@@ -1087,30 +1093,30 @@ local rs = a.rots;
 local big = 0;
 do local i = 1; while LT(i, rs.length) do do if (((LT(rs[i].t, b.t) and GE(rs[i].t, (b.t - c.displaceBusyMs))) and ((rs[i].t - rs[(i - 1)].t) <= 160)) and (adiff(nil, rs[i].yaw, rs[(i - 1)].yaw) >= 90)) then big = big + 1; end end  i = i + 1; end end
 busy = big;
-if ((T(this.inferGround) and (big >= 2)) and GE(this:nearAt(a, b.t):filter(function(_, __p146) local q = __p146[0] local qp = __p146[1] return ((q ~= a) and (Math.hypot((qp.x - a.x), (qp.z - a.z)) <= 6)) end).length, 2)) then do return false end end
+if ((T(this.inferGround) and (big >= 2)) and GE(this:nearAt(a, b.t):filter(function(_, __p148) local q = __p148[0] local qp = __p148[1] return ((q ~= a) and (Math.hypot((qp.x - a.x), (qp.z - a.z)) <= 6)) end).length, 2)) then do return false end end
 local ap = this:posAt(a, r.t);
 local v = nil; local vd = 1000000000; local other = false;
 local onto = AN(0);
 local near = AN(0);
-for __i147, q in ITER(this.players:values()) do do if ((q ~= a) and (not T(this:hidden(q)))) then near:push(AN(2, q, this:posAt(q, r.t))); end end   end
+for __i149, q in ITER(this.players:values()) do do if ((q ~= a) and (not T(this:hidden(q)))) then near:push(AN(2, q, this:posAt(q, r.t))); end end   end
 if (T(this.self) and (Math.abs((r.t - this.self.t)) < 1500)) then local sp = this.self;
-for __i149, e in ITER(OR(this.selfTrack, AN(0))) do do if (Math.abs((e.t - r.t)) < Math.abs((sp.t - r.t))) then sp = e; end end   end
+for __i151, e in ITER(OR(this.selfTrack, AN(0))) do do if (Math.abs((e.t - r.t)) < Math.abs((sp.t - r.t))) then sp = e; end end   end
 near:push(AN(2, {name = "you"}, sp)); end
-for __i151, q, qp in ITER2(near) do do local d = Math.hypot((qp.x - ap.x), (qp.y - ap.y), (qp.z - ap.z));
-if LT(d, this.cfg.displaceMinDist) then goto __c152 end
+for __i153, q, qp in ITER2(near) do do local d = Math.hypot((qp.x - ap.x), (qp.y - ap.y), (qp.z - ap.z));
+if LT(d, this.cfg.displaceMinDist) then goto __c154 end
 local want = yawTo(nil, (qp.x - ap.x), (qp.z - ap.z));
 local replay = this.inferGround;
 if (((d <= (T(replay) and 6 or 4.5)) and T(run:every(function(_, x)  return (adiff(nil, x.yaw, want) <= IFX(T(replay), function() return c.displaceOtherAim end, function() return c.auraAim end)) end))) and (adiff(nil, b.yaw, want) > 45)) then other = true;
 onto:push(AN(2, q, d));
-goto __c152 end
-if (d > 4.5) then goto __c152 end
+goto __c154 end
+if (d > 4.5) then goto __c154 end
 if (GT(run.length, 1) and T(run:every(function(_, x)  return (adiff(nil, x.yaw, want) <= 40) end))) then other = true;
-goto __c152 end
-if (d >= vd) then goto __c152 end
-if T(this:sameTeam(a, q)) then goto __c152 end
-if (((adiff(nil, b.yaw, want) > 70) or (adiff(nil, f.yaw, want) > 70)) or T(run:some(function(_, x)  return (adiff(nil, x.yaw, want) < 45) end))) then goto __c152 end
+goto __c154 end
+if (d >= vd) then goto __c154 end
+if T(this:sameTeam(a, q)) then goto __c154 end
+if (((adiff(nil, b.yaw, want) > 70) or (adiff(nil, f.yaw, want) > 70)) or T(run:some(function(_, x)  return (adiff(nil, x.yaw, want) < 45) end))) then goto __c154 end
 v = q;
-vd = d; end ::__c152::  end
+vd = d; end ::__c154::  end
 if (T(other) and T(this:snapHit(a, b, run, f, t, out, back, busy, onto))) then do return true end end
 if ((not T(v)) or T(other)) then do return false end end
 local deg = Math.round(Math.min(out, back));
@@ -1131,23 +1137,23 @@ Engine.bhBlock = function(this, p, t)  local q = p.bhPend; local s = ANDF(q, fun
 if ((T(s) and (s.blockAt == nil)) and LE((t - s.t), this.cfg.blockHitAfterMs)) then s.blockAt = t; end end
 Engine.fightAt = function(this, p, t)  local ms = 100;
 if ((T(this.self) and T(OR(this.selfHurts, AN(0)):some(function(_, h)  return (Math.abs((h - t)) <= ms) end))) and (Math.hypot((this.self.x - p.x), (this.self.y - p.y), (this.self.z - p.z)) < 6)) then do return true end end
-for __i153, q in ITER(this.players:values()) do do if ((q == p) or (not T(OR(q.hurts, AN(0)):some(function(_, h)  return (Math.abs((h.t - t)) <= ms) end)))) then goto __c154 end
+for __i155, q in ITER(this.players:values()) do do if ((q == p) or (not T(OR(q.hurts, AN(0)):some(function(_, h)  return (Math.abs((h.t - t)) <= ms) end)))) then goto __c156 end
 local a = this:posAt(p, t); local b = this:posAt(q, t);
-if (Math.hypot((a.x - b.x), (a.y - b.y), (a.z - b.z)) < 6) then do return true end end end ::__c154::  end
+if (Math.hypot((a.x - b.x), (a.y - b.y), (a.z - b.z)) < 6) then do return true end end end ::__c156::  end
 do return false end end
 Engine.bhFlush = function(this, p, t, next)  local c = this.cfg; local q = OR(p.bhPend, AN(0));
 while (T(q.length) and (T(next) or GT((t - q[0].t), c.blockHitAfterMs))) do do local s = q:shift();
-if (not T(this:fightAt(p, s.t))) then goto __c155 end
+if (not T(this:fightAt(p, s.t))) then goto __c157 end
 local H = (function() p.bhHits = OR(p.bhHits, AN(0)); return p.bhHits end)();
 H:push({t = s.t, del = IFX((s.blockAt == nil), function() return nil end, function() return Math.round(((s.blockAt - s.t) / TICK)) end)});
 if GT(H.length, c.blockHitHits) then H:shift(); end
-this:checkBlockHit(p, t); end ::__c155::  end end
+this:checkBlockHit(p, t); end ::__c157::  end end
 Engine.checkBlockHit = function(this, p, t)  local c = this.cfg; local H = p.bhHits;
 if (LT(H.length, c.blockHitHits) or GT((H[(H.length - 1)].t - H[0].t), c.blockHitSpanMs)) then do return end end
 local b = H:filter(function(_, x)  return (x.del ~= nil) end);
 if LT(b.length, c.blockHitMin) then do return end end
 local best = 0; local at = 0;
-for __i156, x in ITER(b) do do local n = b:filter(function(_, y)  return ((y.del == x.del) or (y.del == (x.del + 1))) end).length;
+for __i158, x in ITER(b) do do local n = b:filter(function(_, y)  return ((y.del == x.del) or (y.del == (x.del + 1))) end).length;
 if (n > best) then best = n;
 at = x.del; end end   end
 if (LT((best / b.length), c.blockHitBand) or T(this:stalled(H[0].t, t))) then do return end end
@@ -1165,9 +1171,9 @@ p.abAt = t;
 local zero = quick:filter(function(_, u)  return (u.ms == 0) end).length;
 this:add(p, "AutoBlock", 1, ("unblocked their sword for " .. JSSTR(((zero == quick.length) and "less than a tick" or "exactly one tick")) .. " to hit and blocked again, " .. JSSTR(quick.length) .. " of " .. JSSTR(win.length) .. " times in " .. JSSTR(Math.round((c.abWindow / 1000))) .. "s (by hand it takes 2+ ticks)"), t, c.abVL); end end
 Engine.hitNearby = function(this, p, t, ms)  if ((T(this.self) and (Math.abs((this.selfHurtAt - t)) <= ms)) and (Math.hypot((this.self.x - p.x), (this.self.y - p.y), (this.self.z - p.z)) < 6)) then do return true end end
-for __i158, q in ITER(this.players:values()) do do if (q == p) then goto __c159 end
+for __i160, q in ITER(this.players:values()) do do if (q == p) then goto __c161 end
 if (Math.abs((q.hurtAt - t)) <= ms) then local a = this:posAt(p, t); local b = this:posAt(q, t);
-if (Math.hypot((a.x - b.x), (a.y - b.y), (a.z - b.z)) < 6) then do return true end end end end ::__c159::  end
+if (Math.hypot((a.x - b.x), (a.y - b.y), (a.z - b.z)) < 6) then do return true end end end end ::__c161::  end
 do return false end end
 Engine.bedsNear = function(this, x, z, r, y)  do return this.world:bedsNear(x, z, r, y) end end
 Engine.checkDefend = function(this, p, pl)  local c = this.cfg; local t = pl.t;
@@ -1249,7 +1255,7 @@ if (R.n == 3) then R.t3 = t;
 R.yaw0 = pl.yaw;
 R.ymin = (function() R.ymax = 0; return R.ymax end)();
 R.pmin = (function() R.pmax = pl.pitch; return R.pmax end)(); end
-if GT(R.n, 3) then for __i163, r in ITER(p.rots) do do if (GT(r.t, R.last) and LE(r.t, (t + 5))) then look(nil, r.yaw, r.pitch); end end   end
+if GT(R.n, 3) then for __i165, r in ITER(p.rots) do do if (GT(r.t, R.last) and LE(r.t, (t + 5))) then look(nil, r.yaw, r.pitch); end end   end
 look(nil, pl.yaw, pl.pitch); end
 if (GE(R.n, 3) and (T(p.sneak) or T(p.crouches:some(function(_, x)  return GE((x.t - x.ms), R.t3) end)))) then R.broken = true; end
 if (GT((R.ymax - R.ymin), c.safeHeadDeg) or GT((R.pmax - R.pmin), c.safeHeadDeg)) then R.broken = true; end
@@ -1273,13 +1279,13 @@ R.done = true;
 this:add(p, "Scaffold", c.safeVL, ("bridged backwards in a straight line, " .. JSSTR(R.n) .. " blocks in " .. JSSTR(TOFIXED(secs, 1)) .. "s (" .. JSSTR(TOFIXED(speed, 1)) .. " b/s), without crouching once and with their head locked" .. JSSTR((T(R.bad) and (" (" .. JSSTR(R.bad) .. " of " .. JSSTR(R.aimed) .. " blocks placed where they couldn't have aimed)") or "")) .. " - like safewalk: at that pace hands shift at every block, unless bridging diagonally (breezily) or facing forward (godbridge)"), t, c.keepYVL); end
 Engine.fallingAt = function(this, p, t, feetY)  local before = this:posAt(p, (t - 150));
 local peak = (-1000000000);
-for __i165, e in ITER(p.track) do do if (LE(e.t, t) and ((t - e.t) <= 1500)) then peak = Math.max(peak, e.y); end end   end
+for __i167, e in ITER(p.track) do do if (LE(e.t, t) and ((t - e.t) <= 1500)) then peak = Math.max(peak, e.y); end end   end
 do return ((feetY < (before.y - 0.1)) and ((peak - feetY) >= 1)) end end
 Engine.proposeClutch = function(this, p, t, score, reason, blocks)  local c = p.clutchPend;
 local bs = blocks:map(function(_, b)  return {x = b.x, y = b.y, z = b.z} end);
 if (T(c) and ((t - c.t0) < 2000)) then if GT(score, c.score) then c.score = score;
 c.reason = reason; end
-for __i167, b in ITER(bs) do do if (not T(c.blocks:some(function(_, o)  return (((o.x == b.x) and (o.y == b.y)) and (o.z == b.z)) end))) then c.blocks:push(b); end end   end
+for __i169, b in ITER(bs) do do if (not T(c.blocks:some(function(_, o)  return (((o.x == b.x) and (o.y == b.y)) and (o.z == b.z)) end))) then c.blocks:push(b); end end   end
 c.t = t; else p.clutchPend = {t0 = t, t = t, score = score, reason = reason, blocks = bs}; end
 this:checkClutchLanded(p, t); end
 Engine.checkClutchLanded = function(this, p, t)  local c = p.clutchPend;
@@ -1302,7 +1308,7 @@ myauIndex = function(this, b, bed)  local fwd = AN(4, AN(2, 0, 1), AN(2, (-1), 0
 local left = AN(4, AN(2, 1, 0), AN(2, 0, 1), AN(2, (-1), 0), AN(2, 0, (-1)))[bed.dir];
 local fx = bed.x; local fz = bed.z; local hx = bed.hx; local hz = bed.hz; local y = bed.y;
 local list = AN(8, AN(3, (fx + left[0]), y, (fz + left[1])), AN(3, (fx - left[0]), y, (fz - left[1])), AN(3, (hx + left[0]), y, (hz + left[1])), AN(3, (hx - left[0]), y, (hz - left[1])), AN(3, (fx - fwd[0]), y, (fz - fwd[1])), AN(3, (hx + fwd[0]), y, (hz + fwd[1])), AN(3, fx, (y + 1), fz), AN(3, hx, (y + 1), hz));
-do return list:findIndex(function(_, __p169) local x = __p169[0] local yy = __p169[1] local z = __p169[2] return (((x == b.x) and (yy == b.y)) and (z == b.z)) end) end end
+do return list:findIndex(function(_, __p171) local x = __p171[0] local yy = __p171[1] local z = __p171[2] return (((x == b.x) and (yy == b.y)) and (z == b.z)) end) end end
 FACES = AN(6, AN(3, 0, (-1), 0), AN(3, 0, 1, 0), AN(3, 1, 0, 0), AN(3, (-1), 0, 0), AN(3, 0, 0, 1), AN(3, 0, 0, (-1)))
 raycast = function(this, w, ox, oy, oz, vx, vy, vz, maxD, skip, later)  local x = Math.floor(ox); local y = Math.floor(oy); local z = Math.floor(oz);
 local sx = ((vx > 0) and 1 or (-1)); local sy = ((vy > 0) and 1 or (-1)); local sz = ((vz > 0) and 1 or (-1));
@@ -1326,9 +1332,9 @@ nx = 0;
 ny = 0;
 nz = (-sz); end
 if (d > maxD) then break end
-if (((x == skip.x) and (y == skip.y)) and (z == skip.z)) then goto __c170 end
+if (((x == skip.x) and (y == skip.y)) and (z == skip.z)) then goto __c172 end
 local s = w:get(x, y, z);
-if (((s > 0) and T(solid(nil, s))) and (not T(later(nil, x, y, z)))) then do return {x = x, y = y, z = z, nx = nx, ny = ny, nz = nz} end end end ::__c170:: i = i + 1; end end
+if (((s > 0) and T(solid(nil, s))) and (not T(later(nil, x, y, z)))) then do return {x = x, y = y, z = z, nx = nx, ny = ny, nz = nz} end end end ::__c172:: i = i + 1; end end
 do return nil end end
 BLOCK_NAMES = {[35] = "wool", [121] = "end stone", [5] = "wood", [159] = "clay", [172] = "clay", [49] = "obsidian", [20] = "glass", [95] = "glass", [26] = "a bed", [65] = "a ladder", [24] = "sandstone"}
 blockName = function(this, state)  do return IFX((state > 0), function() return OR(BLOCK_NAMES[SAR(state, 4)], "a block") end, function() return "a block" end) end end
