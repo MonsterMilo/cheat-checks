@@ -1,0 +1,30 @@
+{
+  "name": "cheat-checks",
+  "display_name": "Cheat Checks",
+  "version": "0.1.0",
+  "description": "Beta. Flags cheaters in Bed Wars games and replays.",
+  "prefix": "§5CC",
+  "homepage": null,
+  "dependencies": [
+    {
+      "name": "hypixel-mod-api",
+      "version": null,
+      "optional": false
+    }
+  ],
+  "commands": [
+    {
+      "usage": "/check <player>",
+      "description": "Show a player's check levels"
+    },
+    {
+      "usage": "/flags",
+      "description": "Who flagged this game"
+    },
+    {
+      "usage": "/status",
+      "description": "Show what the checks see"
+    }
+  ],
+  "min_starfish_version": "0.1.0-beta.16"
+}
