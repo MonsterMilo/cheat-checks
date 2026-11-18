@@ -3,7 +3,7 @@ plugin = {
     displayName = "Cheat Checks",
     command = "cheats",
     prefix = "§5CC",
-    version = "0.1.2",
+    version = "0.1.3",
     minStarfishVersion = "0.1.0-beta.16",
     description = "Beta. Flags cheaters in Bed Wars games and replays.",
     dependencies = {
@@ -52,6 +52,7 @@ local REPEAT = { n = 3, windowMs = 300000, gapMs = 5000 }
 -- Modes whose items look like cheats (auto bridges, dashes, double jumps): no flags there.
 local NO_CHECK_MODES = { "ULTIMATE", "RUSH", "LUCKY", "ARMED", "SWAP" }
 local GAME_START = { "Protect your bed and destroy the enemy beds", "powerful upgrades" }
+local GAME_END_TITLES = { "VICTORY", "GAME OVER" }
 local NPC_NAME = "^[a-z0-9]+$"
 
 -- Settings ----------------------------------------------------------------
@@ -61,7 +62,7 @@ starfish.schema.section({
     label = "Cheat Checks",
     description = "Flags cheaters in Bed Wars games and replays.",
     settings = {
-        { key = "enabled", type = "toggle", default = true, label = "Enabled", description = "Turns all checks on or off." },
+        { key = "general.enabled", type = "toggle", default = true, label = "Enabled", description = "Turns all checks on or off." },
         { key = "sound", type = "soundToggle", default = true, label = "Sound", description = "Sound on a flag." },
         { key = "sensitivity", type = "cycle", default = "medium", label = "Sensitivity", description = "Low: blatant only. Medium: recommended. High: more catches, more false flags.", values = {
             { text = "Low", value = "low" },
@@ -268,7 +269,7 @@ end
 local world = World.new()
 local engine = NEW(Engine, { world = world })
 local S = {
-    inGame = false, mode = nil, clock = nil, myEid = nil, myHealth = nil,
+    inGame = false, inLobby = false, mode = nil, clock = nil, myEid = nil, myHealth = nil, muted = {},
     flagged = {}, flaggedOrder = {}, seen = {}, errorAt = -1e9, errors = 0, lastError = nil, votes = { first = 0, after = 0 },
 }
 
@@ -319,7 +320,9 @@ engine.add = function(this, p, check, amount, reason, t, limit)
 end
 
 local function feed(kind, d)
-    if not cfg("enabled") then return end
+    if not cfg("general.enabled") then return end
+    -- Hypixel lobbies: nothing to check (a world change resets everything anyway).
+    if S.inLobby and not S.clock then return end
     engine.inferGround = S.clock ~= nil
     local ok, err = pcall(engine.feed, engine, kind, d, nowT())
     if not ok then
@@ -335,7 +338,7 @@ end
 local function reset()
     world.forced = nil
     engine:reset()
-    S.flagged, S.flaggedOrder, S.seen = {}, {}, {}
+    S.flagged, S.flaggedOrder, S.seen, S.muted = {}, {}, {}, {}
 end
 
 -- Flags ---------------------------------------------------------------------
@@ -387,7 +390,7 @@ engine.onFlag = function(_, f)
     if not raw or raw:sub(1, 3) == "§k" then return end
     local replay = S.clock ~= nil
     local name = replay and plain(raw) or raw
-    if (#name == 10 and name:match(NPC_NAME)) or (not replay and uuidVersion(p.uuid) == 2) then return end
+    if (replay and #name == 10 and name:match(NPC_NAME)) or (not replay and uuidVersion(p.uuid) == 2) then return end
     local rec = S.flagged[name]
     if not rec then
         rec = { uuid = (not replay) and p.uuid or nil, checks = {}, vl = {} }
@@ -397,9 +400,36 @@ engine.onFlag = function(_, f)
     rec.checks[f.check] = true
     rec.vl[f.check] = f.vl
     starfish.log.debug("Flagging " .. name .. " for " .. f.check .. " (VL " .. JSSTR(f.vl) .. "): " .. tostring(f.reason))
+    starfish.events.emit("cheatchecks:flag", { name = plain(name), uuid = rec.uuid, check = f.check, label = CHECK[f.check].label, vl = f.vl, reason = tostring(f.reason), replay = replay })
+    if S.muted[plain(name):lower()] then return end
     if not repeatOk(name .. "|" .. f.check, f.t) then return end
     say(name, rec.uuid, f.check, f.vl, f.reason)
 end
+
+-- For other plugins: getFlags(name) -> { {check, label, vl}, ... } or nil;
+-- getAllFlags() -> { {name, uuid, checks = {...}}, ... } for this game.
+local function flagList(rec)
+    local out = {}
+    for check in pairs(rec.checks) do out[#out + 1] = { check = check, label = CHECK[check].label, vl = rec.vl[check] } end
+    table.sort(out, function(a, b) return CHECK[a.check].order < CHECK[b.check].order end)
+    return out
+end
+starfish.plugin.export("getFlags", function(name)
+    if type(name) ~= "string" then return nil end
+    local want = plain(name):lower()
+    for n, rec in pairs(S.flagged) do
+        if plain(n):lower() == want then return flagList(rec) end
+    end
+    return nil
+end)
+starfish.plugin.export("getAllFlags", function()
+    local out = {}
+    for _, n in ipairs(S.flaggedOrder) do
+        local rec = S.flagged[n]
+        out[#out + 1] = { name = plain(n), uuid = rec.uuid, checks = flagList(rec) }
+    end
+    return out
+end)
 
 -- Events --------------------------------------------------------------------
 
@@ -424,15 +454,27 @@ end
 -- A new world: everyone starts fresh.
 on("session:join", function(d)
     S.myEid = d.entityId
-    S.inGame, S.clock, S.mode, S.myHealth = false, nil, nil, nil
+    S.inGame, S.inLobby, S.clock, S.mode, S.myHealth = false, false, nil, nil, nil
     reset()
 end)
 on("world:respawn", function()
-    S.inGame, S.clock, S.myHealth = false, nil, nil
+    S.inGame, S.inLobby, S.clock, S.myHealth = false, false, nil, nil
     reset()
 end)
 on("hypixel:location", function(d)
-    if d.success and d.location then S.mode = d.location.mode end
+    if d.success and d.location then
+        S.mode = d.location.mode
+        S.inLobby = d.location.lobbyName ~= nil
+    end
+end)
+
+-- Game over: winners fly, ride and dance; checks stop until the next game.
+local function gameOver()
+    if S.inGame and not S.clock then S.inGame = false end
+end
+on("chat:title", function(d)
+    local text = plain(starfish.text.plain(d.text or d.title or d.message or ""))
+    for _, w in ipairs(GAME_END_TITLES) do if text:find(w, 1, true) then gameOver() return end end
 end)
 
 on("chat:receive", function(d)
@@ -453,6 +495,7 @@ on("chat:receive", function(d)
         end
         return
     end
+    if text:find("1st Killer - ", 1, true) and not text:find(": ", 1, true) then gameOver() return end
     if text:find(":", 1, true) then return end
     for _, phrase in ipairs(GAME_START) do
         if text:find(phrase, 1, true) then
@@ -530,7 +573,14 @@ on("world:explosion", function(d)
 end)
 
 -- Players and objects.
+local OBJECT_IDS = { boat = 1, item = 2, minecart = 10, tnt = 50, ender_crystal = 51, arrow = 60, snowball = 61,
+    egg = 62, fireball = 63, small_fireball = 64, ender_pearl = 65, wither_skull = 66, falling_block = 70,
+    potion = 73, experience_bottle = 75, firework_rocket = 76, fireworks_rocket = 76, armor_stand = 78, fishing_bobber = 90 }
 on("entity:spawn", function(d)
+    if d.kind ~= "object" and type(d.kind) == "string" and tonumber(d.type) == nil then
+        local id = OBJECT_IDS[d.kind:gsub("^minecraft:", "")]
+        if id then d = setmetatable({ kind = "object", type = id }, { __index = d }) end
+    end
     if d.kind == "object" or (d.uuid == nil and d.kind ~= "player" and d.kind ~= "minecraft:player") then
         if d.kind == "object" then
             feed("object", { id = d.entityId, type = d.type, x = d.x, y = d.y, z = d.z })
@@ -625,12 +675,14 @@ end)
 on("entity:attributes", function(d)
     local id = entId(d)
     if not id then return end
-    for _, a in ipairs(d.properties or {}) do
-        if a.key == "generic.movementSpeed" then
+    for _, a in ipairs(d.properties or d.attributes or {}) do
+        local k = a.key or a.name or a.id
+        if k == "generic.movementSpeed" or k == "minecraft:generic.movement_speed" or k == "generic.movement_speed" then
             -- The Speed potion's modifier (0.2 per level).
             local amp = 0
             for _, m in ipairs(a.modifiers or {}) do
-                if type(m.uuid) == "string" and m.uuid:lower():sub(1, 8) == "91aeaa56" then amp = math.floor((m.amount or 0) / 0.2 + 0.5) end
+                local mu = m.uuid or m.id
+                if type(mu) == "string" and mu:lower():gsub("-", ""):sub(1, 8) == "91aeaa56" then amp = math.floor((m.amount or 0) / 0.2 + 0.5) end
             end
             feed("attr", { id = id, speedAmp = amp })
             return
@@ -668,6 +720,16 @@ local function labels(set)
     return table.concat(out, ", ")
 end
 
+starfish.commands.register("mute", {
+    description = "Hide or show a player's flags",
+    arguments = { { name = "player", type = "string", description = "Player name" } },
+}, function(ctx)
+    local k = plain(ctx.args.player):lower()
+    if S.muted[k] then S.muted[k] = nil; return "§7Showing flags for §f" .. ctx.args.player .. "§7 again." end
+    S.muted[k] = true
+    return "§7Hiding flags for §f" .. ctx.args.player .. "§7 until you leave."
+end)
+
 starfish.commands.register("flags", { description = "Who flagged this game", default = true }, function()
     if #S.flaggedOrder == 0 then return "§7No flags this game." end
     local lines = { "§fFlags this game:" }
@@ -684,7 +746,7 @@ starfish.commands.register("status", { description = "Show what the checks see" 
     local players = 0
     for _ in ITER(engine.players:values()) do players = players + 1 end
     return starfish.ui.lines({
-        "§7Checks " .. (cfg("enabled") and "§aon" or "§coff") .. "§7, " .. (S.clock and "replay" or S.inGame and "in a game" or "not in a game") .. (S.mode and (" §8(" .. S.mode .. ")") or ""),
+        "§7Checks " .. (cfg("general.enabled") and "§aon" or "§coff") .. "§7, " .. (S.clock and "replay" or S.inGame and "in a game" or "not in a game") .. (S.mode and (" §8(" .. S.mode .. ")") or ""),
         "§7Players tracked: §f" .. players,
         "§7Block order: §f" .. S.votes.first .. " first / " .. S.votes.after .. " after",
         "§7Unknown blocks: §f" .. (#unknown > 0 and table.concat(unknown, ", ") or "none"),
