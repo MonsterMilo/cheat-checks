@@ -3,7 +3,7 @@ plugin = {
     displayName = "Cheat Checks",
     command = "cheats",
     prefix = "§5CC",
-    version = "0.1.4",
+    version = "0.1.5",
     minStarfishVersion = "0.1.0-beta.16",
     description = "Beta. Flags cheaters in Bed Wars games and replays.",
     dependencies = {
@@ -312,11 +312,13 @@ engine.teamOf = function(_, q)
 end
 
 -- Sensitivity: the evidence a check needs before it flags.
+local function sensitivity(check)
+    local s = SENSITIVITY[cfg("sensitivity") or "medium"] or {}
+    return s[check] or s.all or 1
+end
 local baseAdd = engine.add
 engine.add = function(this, p, check, amount, reason, t, limit)
-    local s = SENSITIVITY[cfg("sensitivity") or "medium"] or {}
-    local m = s[check] or s.all or 1
-    return baseAdd(this, p, check, amount, reason, t, limit * m)
+    return baseAdd(this, p, check, amount, reason, t, limit * sensitivity(check))
 end
 
 local function feed(kind, d)
@@ -748,7 +750,6 @@ starfish.commands.register("status", { description = "Show what the checks see" 
     return starfish.ui.lines({
         "§7Checks " .. (cfg("general.enabled") and "§aon" or "§coff") .. "§7, " .. (S.clock and "replay" or S.inGame and "in a game" or "not in a game") .. (S.mode and (" §8(" .. S.mode .. ")") or ""),
         "§7Players tracked: §f" .. players,
-        "§7Block order: §f" .. S.votes.first .. " first / " .. S.votes.after .. " after",
         "§7Unknown blocks: §f" .. (#unknown > 0 and table.concat(unknown, ", ") or "none"),
         "§7Errors: " .. (S.errors == 0 and "§anone" or ("§c" .. S.errors .. " §8(" .. tostring(S.lastError):sub(1, 120) .. ")")),
     })
@@ -781,7 +782,7 @@ starfish.commands.register("check", {
             local vl = p.vl[n] or 0
             if vl > 0 then
                 local v = JSSTR(math.floor(vl * 10 + 0.5) / 10)
-                local state = p.alertAt[n] and ("§cflagged §8(VL " .. v .. ")") or ("§eVL " .. v .. "§8/" .. JSSTR(LIMITS[n] * ((SENSITIVITY[cfg("sensitivity") or "medium"] or {})[n] or (SENSITIVITY[cfg("sensitivity") or "medium"] or {}).all or 1)))
+                local state = p.alertAt[n] and ("§cflagged §8(VL " .. v .. ")") or ("§eVL " .. v .. "§8/" .. JSSTR(LIMITS[n] * sensitivity(n)))
                 lines[#lines + 1] = " §7" .. c[2] .. ": " .. state .. (p.why[n] and ("§8 - " .. p.why[n]) or "")
             else
                 clean[#clean + 1] = c[2]
@@ -792,13 +793,13 @@ starfish.commands.register("check", {
     return starfish.ui.lines(lines)
 end)
 
-
 -- Loaded mid-game (a reload): count it as a game.
 do
     local api = starfish.plugins.optional("hypixel-mod-api")
     local loc = api and api.getLocation()
     if loc then
         S.mode = loc.mode
-        if loc.mode and loc.serverType == "BEDWARS" then S.inGame = true end
+        S.inLobby = loc.lobbyName ~= nil
+        if loc.mode and loc.serverType == "BEDWARS" and not S.inLobby then S.inGame = true end
     end
 end
