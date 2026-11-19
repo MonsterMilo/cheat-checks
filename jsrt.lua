@@ -1,4 +1,4 @@
--- JS semantics for code compiled by js2lua.js: 0-based arrays with .length,
+-- JS semantics for the compiled engine: 0-based arrays with .length,
 -- insertion-ordered Map / Set, JS truthiness, JS number formatting, Math.
 -- Every function value takes `this` as its first argument.
 
