@@ -1,8 +1,8 @@
 {
   "name": "cheat-checks",
   "display_name": "Cheat Checks",
-  "version": "0.1.5",
-  "description": "Beta. Flags cheaters in Bed Wars games and replays.",
+  "version": "0.1.6",
+  "description": "Beta. Advanced anticheat with 16 checks for bridging, movement and combat. Works in game and replays",
   "prefix": "§5CC",
   "homepage": null,
   "dependencies": [
