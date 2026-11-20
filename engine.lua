@@ -1,4 +1,4 @@
--- Cheat Checks engine (compiled to Lua, build 385bf964). Do not edit by hand.
+-- Cheat Checks engine (compiled to Lua, build fdc21300). Do not edit by hand.
 local __exports = {}
 local TICK, DEG, PASSABLE, CLIMB_OR_SLOW, SWORDS, FOOD, BOW, TOOLS, BED, LADDER, TALL, FALL, solid, isBlockItem, wrap, adiff, yawTo, CFG, Player, Engine, myauSlots, myauIndex, FACES, raycast, BLOCK_NAMES, blockName
 TICK = 50
@@ -521,21 +521,25 @@ Engine.checkBlockIn = function(this, p, pl, pos)  local c = this.cfg; local t = 
 local fx = Math.floor(pos.x); local fy = Math.floor((pos.y + 0.01)); local fz = Math.floor(pos.z);
 local dx = (pl.x - fx); local dy = (pl.y - fy); local dz = (pl.z - fz);
 if T(this:checkBlockInRing(p, pl, pos, fy)) then do return end end
+local low = (((Math.abs(dx) + Math.abs(dz)) == 1) and (dy == (-1)));
 local side = (((Math.abs(dx) + Math.abs(dz)) == 1) and ((dy == 0) or (dy == 1)));
 local top = (((dx == 0) and (dz == 0)) and (dy == 2));
-if ((not T(side)) and (not T(top))) then do return end end
-local cell = (JSSTR((JSSTR((JSSTR((JSSTR(fx) .. JSSTR(","))) .. JSSTR(fy))) .. JSSTR(","))) .. JSSTR(fz));
+if (((not T(side)) and (not T(top))) and (not T(low))) then do return end end
+local cell = (JSSTR((JSSTR(fx) .. JSSTR(","))) .. JSSTR(fz));
 local L = (function() p.shell = OR(p.shell, AN(0)):filter(function(_, e)  return (((t - e.t) <= 1000) and (e.cell == cell)) end); return p.shell end)();
-L:push({t = t, cell = cell, dir = (T(top) and "top" or (JSSTR((JSSTR(dx) .. JSSTR(","))) .. JSSTR(dz)))});
+L:push({t = t, cell = cell, dir = (T(top) and "top" or (JSSTR((JSSTR(dx) .. JSSTR(","))) .. JSSTR(dz))), low = low});
+if T(low) then do return end end
 if (T(p.blockInAt) and ((t - p.blockInAt) < 3000)) then do return end end
 local win = L:filter(function(_, e)  return LE((t - e.t), c.blockInMs) end);
 local quick = 0;
 do local i = 1; while LT(i, win.length) do do if ((win[i].dir ~= win[(i - 1)].dir) and ((win[i].t - win[(i - 1)].t) <= 75)) then quick = quick + 1; end end  i = i + 1; end end
-if ((GE(win.length, c.blockInMin) and GE(quick, c.blockInQuickTurns)) and ((t - win[0].t) >= 100)) then p.blockInAt = t;
-this:add(p, "AutoBlockIn", 2, ("blocked themselves in with " .. JSSTR(win.length) .. " blocks in " .. JSSTR(TOFIXED(((t - win[0].t) / 1000), 2)) .. "s, turning to a new side between two ticks " .. JSSTR(quick) .. " times (by hand a new side takes 2+ ticks)"), t, c.blockInVL);
+local walls = win:filter(function(_, e)  return (not T(e.low)) end).length;
+if ((GE(walls, c.blockInMin) and GE(quick, c.blockInQuickTurns)) and ((t - win[0].t) >= 100)) then p.blockInAt = t;
+this:add(p, "AutoBlockIn", 2, ("blocked themselves in with " .. JSSTR(walls) .. " blocks in " .. JSSTR(TOFIXED(((t - win[0].t) / 1000), 2)) .. "s, turning to a new side between two ticks " .. JSSTR(quick) .. " times (by hand a new side takes 2+ ticks)"), t, c.blockInVL);
 do return end end
-local a = L[(L.length - 2)];
-if ((T(a) and (a.dir ~= L[(L.length - 1)].dir)) and ((t - a.t) <= 800)) then local rs = p.rots:filter(function(_, r)  return (GT(r.t, (a.t - 5)) and LE(r.t, (t + 5))) end); local steps = AN(0);
+local W = L:filter(function(_, e)  return (not T(e.low)) end);
+local a = W[(W.length - 2)];
+if ((T(a) and (a.dir ~= W[(W.length - 1)].dir)) and ((t - a.t) <= 800)) then local rs = p.rots:filter(function(_, r)  return (GT(r.t, (a.t - 5)) and LE(r.t, (t + 5))) end); local steps = AN(0);
 do local i = 1; while LT(i, rs.length) do do local dt = ((rs[i].t - rs[(i - 1)].t) / 50);
 if ((dt >= 0.5) and (dt <= 1.5)) then steps:push((Math.abs(wrap(nil, (rs[i].yaw - rs[(i - 1)].yaw))) + Math.abs((rs[i].pitch - rs[(i - 1)].pitch)))); end end  i = i + 1; end end
 local mv = steps:filter(function(_, x)  return ((x >= 3) and (x <= 40)) end);
@@ -543,10 +547,10 @@ if (GE(mv.length, 3) and GE(mv.length, (steps.length - 2))) then local m = (mv:r
 if LE((sd / m), c.blockInSteady) then p.robotTurns = OR(p.robotTurns, AN(0)):filter(function(_, x)  return ((t - x) <= 2500) end);
 p.robotTurns:push(t); end end end
 local robot = OR(p.robotTurns, AN(0)):filter(function(_, x)  return ((t - x) <= 2500) end).length;
-if (((robot >= 2) and GE(L.length, 4)) and GE(NEW(Set, L:map(function(_, e)  return e.dir end)).size, 3)) then p.blockInAt = t;
-this:add(p, "AutoBlockIn", 2, ("blocked themselves in with " .. JSSTR(L.length) .. " blocks, turning from side to side " .. JSSTR(robot) .. " times at a machine-steady speed (hands flick there unevenly)"), t, c.blockInVL);
+if (((robot >= 2) and GE(W.length, 4)) and GE(NEW(Set, W:map(function(_, e)  return e.dir end)).size, 3)) then p.blockInAt = t;
+this:add(p, "AutoBlockIn", 2, ("blocked themselves in with " .. JSSTR(W.length) .. " blocks, turning from side to side " .. JSSTR(robot) .. " times at a machine-steady speed (hands flick there unevenly)"), t, c.blockInVL);
 do return end end
-local fast = L:filter(function(_, e)  return LE((t - e.t), c.blockInFastMs) end);
+local fast = W:filter(function(_, e)  return LE((t - e.t), c.blockInFastMs) end);
 if (GE(fast.length, c.blockInFast) and GE(NEW(Set, fast:map(function(_, e)  return e.dir end)).size, 3)) then p.blockInAt = t;
 this:add(p, "AutoBlockIn", 1, ("placed " .. JSSTR(fast.length) .. " blocks around themselves in " .. JSSTR(TOFIXED(((t - fast[0].t) / 1000), 1)) .. "s"), t, c.blockInVL); end end
 Engine.checkBlockInRing = function(this, p, pl, pos, fy)  local c = this.cfg; local t = pl.t;
