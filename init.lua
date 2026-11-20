@@ -3,9 +3,9 @@ plugin = {
     displayName = "Cheat Checks",
     command = "cheats",
     prefix = "§5CC",
-    version = "0.1.5",
+    version = "0.1.6",
     minStarfishVersion = "0.1.0-beta.16",
-    description = "Beta. Flags cheaters in Bed Wars games and replays.",
+    description = "Beta. Advanced anticheat with 16 checks for bridging, movement and combat. Works in game and replays",
     dependencies = {
         { name = "hypixel-mod-api" },
     },
@@ -244,9 +244,9 @@ function ReplayClock:bar(text, real)
     local at = clockSecs(pos) * 1000
     if not self.at then self.at = at; return nil end
     if at < self.at - 2500 or at > self.at + 3500 then
-        local from = self.t
+        local from, back = self.t, at < self.at
         self.t = self.t + 15000; self.at = at
-        return { from = from, to = self.t + 1500 }
+        return { from = from, to = self.t + 1500, back = back }
     end
     -- The bar only shows whole seconds: keep our guess inside it.
     if self.at < at then self.at = at end
@@ -493,6 +493,8 @@ on("chat:receive", function(d)
         local jump = S.clock:bar(text, starfish.time.monotonic())
         if jump then
             engine:addStall(jump.from, jump.to)
+            -- Back over a bit already watched: start the scores again, or it only flags on a second watch.
+            if jump.back then engine:clearScores() end
             S.seen = {} -- watching a bit again: say its flags again too
         end
         return
