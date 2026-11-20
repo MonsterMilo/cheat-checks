@@ -1,6 +1,6 @@
 # Cheat Checks
 
-Beta. Flags cheaters in Bed Wars games and replays.
+Beta. Advanced anticheat with 16 checks for bridging, movement and combat. Works in game and replays
 
 ## Requires
 
